@@ -1135,6 +1135,7 @@
 		E9C8E2BB24422C8300526E72 /* YapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C8E2B924422C8300526E72 /* YapDatabaseView.swift */; };
 		E9C8E2BC24422C8300526E72 /* YapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C8E2B924422C8300526E72 /* YapDatabaseView.swift */; };
 		E9C8E2BD24422C8300526E72 /* YapDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C8E2B924422C8300526E72 /* YapDatabaseView.swift */; };
+		E9C8E2C62442393800526E72 /* YapDatabase-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E9C8E2C52442393800526E72 /* YapDatabase-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1597,6 +1598,8 @@
 		E9C8E2AD24422C5D00526E72 /* YapDatabaseSearchResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YapDatabaseSearchResultsView.swift; sourceTree = "<group>"; };
 		E9C8E2B324422C7000526E72 /* YapDatabaseSecondaryIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YapDatabaseSecondaryIndex.swift; sourceTree = "<group>"; };
 		E9C8E2B924422C8300526E72 /* YapDatabaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YapDatabaseView.swift; sourceTree = "<group>"; };
+		E9C8E2C42442393800526E72 /* YapDatabase.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = YapDatabase.modulemap; sourceTree = "<group>"; };
+		E9C8E2C52442393800526E72 /* YapDatabase-umbrella.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YapDatabase-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2471,6 +2474,8 @@
 		DCF7C2BF1BCC8E870087ED39 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E9C8E2C52442393800526E72 /* YapDatabase-umbrella.h */,
+				E9C8E2C42442393800526E72 /* YapDatabase.modulemap */,
 				DC6521681BCED4D800188E23 /* Info.plist */,
 				DC55F45E1D78CED9007CEF3A /* module.modulemap */,
 				DC302B031BE94EFC009F8C4D /* Dependencies */,
@@ -3089,6 +3094,7 @@
 				DC6521001BCEC77E00188E23 /* YapDatabaseViewTransaction.h in Headers */,
 				DC6520FC1BCEC77E00188E23 /* YapDatabaseViewOptions.h in Headers */,
 				DCBA3C641FAE0EC50086289D /* YapDatabaseCloudCorePipelinePrivate.h in Headers */,
+				E9C8E2C62442393800526E72 /* YapDatabase-umbrella.h in Headers */,
 				DC65200C1BCEC77E00188E23 /* YDBCKRecord.h in Headers */,
 				DC65209A1BCEC77E00188E23 /* YapDatabaseRTreeIndexSetup.h in Headers */,
 				DC6520AE1BCEC77E00188E23 /* YapDatabaseSearchResultsViewConnection.h in Headers */,
@@ -4658,7 +4664,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Framework/iOS/module.modulemap;
+				MODULEMAP_FILE = Framework/iOS/YapDatabase.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.YapDatabase;
 				PRODUCT_NAME = YapDatabase;
 				SDKROOT = iphoneos;
@@ -4684,7 +4690,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Framework/iOS/module.modulemap;
+				MODULEMAP_FILE = Framework/iOS/YapDatabase.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.deusty.YapDatabase;
 				PRODUCT_NAME = YapDatabase;
 				SDKROOT = iphoneos;
