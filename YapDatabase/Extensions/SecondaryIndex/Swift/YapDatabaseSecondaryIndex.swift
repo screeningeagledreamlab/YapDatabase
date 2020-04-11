@@ -1,3 +1,6 @@
+import Foundation
+import YapDatabase.YapDatabaseSecondaryIndex
+
 /// Add Swift extensions here
 
 extension YapDatabaseSecondaryIndexTransaction {

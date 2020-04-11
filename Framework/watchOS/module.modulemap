@@ -53,7 +53,17 @@ framework module YapDatabase {
 
 		export YapDatabaseView
 	}
-	
+	    
+    // Extension: ManualView
+
+    explicit module YapDatabaseManualView {
+        header "YapDatabaseManualView.h"
+        header "YapDatabaseManualViewConnection.h"
+        header "YapDatabaseManualViewTransaction.h"
+
+        export YapDatabaseView
+    }
+
 	// Extension: FilteredView
 	
 	explicit module YapDatabaseFilteredView {

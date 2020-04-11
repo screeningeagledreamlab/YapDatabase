@@ -1,3 +1,6 @@
+import Foundation
+import YapDatabase.YapDatabaseView
+
 /// Add Swift extensions here
 
 extension YapDatabaseViewConnection {
