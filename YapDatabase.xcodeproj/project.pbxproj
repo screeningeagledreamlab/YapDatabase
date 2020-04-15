@@ -1401,7 +1401,6 @@
 		DC651FC11BCEC77E00188E23 /* YapDatabaseConnectionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDatabaseConnectionState.h; sourceTree = "<group>"; };
 		DC651FC21BCEC77E00188E23 /* YapDatabaseConnectionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDatabaseConnectionState.m; sourceTree = "<group>"; };
 		DC651FC31BCEC77E00188E23 /* YapDatabaseLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDatabaseLogging.h; sourceTree = "<group>"; };
-		DC651FC41BCEC77E00188E23 /* YapDatabaseLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDatabaseLogging.m; sourceTree = "<group>"; };
 		DC651FC51BCEC77E00188E23 /* YapDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDatabaseManager.h; sourceTree = "<group>"; };
 		DC651FC61BCEC77E00188E23 /* YapDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDatabaseManager.m; sourceTree = "<group>"; };
 		DC651FC71BCEC77E00188E23 /* YapDatabasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDatabasePrivate.h; sourceTree = "<group>"; };
@@ -2102,7 +2101,6 @@
 				DC651FC11BCEC77E00188E23 /* YapDatabaseConnectionState.h */,
 				DC651FC21BCEC77E00188E23 /* YapDatabaseConnectionState.m */,
 				DC651FC31BCEC77E00188E23 /* YapDatabaseLogging.h */,
-				DC651FC41BCEC77E00188E23 /* YapDatabaseLogging.m */,
 				DC651FC51BCEC77E00188E23 /* YapDatabaseManager.h */,
 				DC651FC61BCEC77E00188E23 /* YapDatabaseManager.m */,
 				DC651FC71BCEC77E00188E23 /* YapDatabasePrivate.h */,
