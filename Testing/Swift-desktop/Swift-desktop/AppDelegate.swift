@@ -9,6 +9,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	//	testDatabase()
 	//	testUpgrade()
 		testIssue515()
+//        testIssue515_A_B()
 	}
 	
 	private func testDatabase() {
@@ -85,10 +86,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 	
 	private func testIssue515() {
-		
 		let baseDirs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 		let baseDir = baseDirs[0]
-
 		let databaseURL = baseDir.appendingPathComponent("database.sqlite")
 		
 		let database = YapDatabase(url: databaseURL)
@@ -108,4 +107,69 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			transaction.setObject(test, forKey: "key", inCollection: collection)
 		}
 	}
+    
+    private func testIssue515_A_B() {
+        let baseDirs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let baseDir = baseDirs[0]
+        
+        let databaseURL = baseDir.appendingPathComponent("database.sqlite")
+        print("databaseURL: \(databaseURL.absoluteString)")
+        
+        let database = YapDatabase(url: databaseURL)
+        database?.register(YapDatabaseRelationship(), withName: "relationship")
+        
+        database?.registerCodableSerialization(List.self, forCollection: kCollection_List)
+        database?.registerCodableSerialization(A.self, forCollection: "A")
+        database?.registerCodableSerialization(B.self, forCollection: "B")
+        
+        let config = YapDatabaseConnectionConfig()
+        config.objectCacheEnabled = false
+        let databaseConnection = database?.newConnection(config)
+        
+        
+        let a = A(id: UUID(), name: "I'm a")
+        let b = B(id: UUID(), aID: a.id, text: "I'm b")
+        
+        databaseConnection?.readWrite({ tx in
+            tx.setObject(a, forKey: a.id.uuidString, inCollection: "A")
+            tx.setObject(b, forKey: b.id.uuidString, inCollection: "B")
+        })
+        
+        databaseConnection?.read({ tx in
+            guard let fetched = tx.object(forKey: a.id.uuidString, inCollection: "A") as? A else { return }
+            print("fetched A: \(fetched)")
+            
+            guard let vtx = tx.ext("relationship") as? YapDatabaseRelationshipTransaction else {
+                return
+            }
+            print("vtx: \(vtx)")
+            vtx.enumerateEdges(withName: "B->A") { (edge, stop) in
+                print("edge: \(edge)")
+            }
+        })
+    }
+}
+
+struct A: Codable {
+    let id: UUID
+    let name: String
+}
+
+struct B: Codable {
+    let id: UUID
+    let aID: UUID
+    let text: String
+}
+
+extension B: YapDatabaseRelationshipNode {
+    public func yapDatabaseRelationshipEdges() -> [YapDatabaseRelationshipEdge]? {
+        [YapDatabaseRelationshipEdge(
+            name: "B->A",
+            sourceKey: id.uuidString,
+            collection: "B",
+            destinationKey: aID.uuidString,
+            collection: "A",
+            nodeDeleteRules: .deleteSourceIfDestinationDeleted
+        )]
+    }
 }

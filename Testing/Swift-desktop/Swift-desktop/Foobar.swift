@@ -34,27 +34,3 @@ struct Foobar: Codable {
 		}
 	}
 }
-
-struct A: Codable {
-    let id: UUID
-    let name: String
-}
-
-struct B: Codable {
-    let id: UUID
-    let aID: UUID
-    let text: String
-}
-
-extension B {
-    public func yapDatabaseRelationshipEdges() -> [YapDatabaseRelationshipEdge]? {
-        [YapDatabaseRelationshipEdge(
-            name: "B->A",
-            sourceKey: id.uuidString,
-            collection: "B",
-            destinationKey: aID.uuidString,
-            collection: "A",
-            nodeDeleteRules: .deleteSourceIfDestinationDeleted
-        )]
-    }
-}
