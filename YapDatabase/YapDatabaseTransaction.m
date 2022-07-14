@@ -2608,6 +2608,16 @@
 				
 				if (object)
 					[connection->objectCache setObject:object forKey:cacheKey];
+				
+				if (object == nil) {
+					NSDictionary *userInfo = @{
+						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																		object:nil
+																	  userInfo:userInfo];
+				}
 			}
 			
 			id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -2633,7 +2643,9 @@
 					[connection->metadataCache setObject:[YapNull null] forKey:cacheKey];
 			}
 			
-			block(keyIndex, object, metadata, &stop);
+			if (object) {
+				block(keyIndex, object, metadata, &stop);
+			}
 			
 			[keyIndexDict removeObjectForKey:key];
 			
@@ -2961,9 +2973,21 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					NSDictionary *userInfo = @{
+						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																		object:nil
+																	  userInfo:userInfo];
+				}
 			}
 			
-			block(rowid, key, object, &stop);
+			if (object) {
+				block(rowid, key, object, &stop);
+			}
 			
 			if (stop || mutation.isMutated) break;
 		}
@@ -3077,9 +3101,21 @@
 						if (object)
 							[connection->objectCache setObject:object forKey:cacheKey];
 					}
+					
+					if (object == nil) {
+						NSDictionary *userInfo = @{
+							YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+							YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+							YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+						[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																			object:nil
+																		  userInfo:userInfo];
+					}
 				}
 				
-				block(rowid, collection, key, object, &stop);
+				if (object) {
+					block(rowid, collection, key, object, &stop);
+				}
 				
 				if (stop || mutation.isMutated) break;
 			}
@@ -3196,9 +3232,21 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					NSDictionary *userInfo = @{
+						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																		object:nil
+																	  userInfo:userInfo];
+				}
 			}
 			
-			block(rowid, collection, key, object, &stop);
+			if (object) {
+				block(rowid, collection, key, object, &stop);
+			}
 			
 			if (stop || mutation.isMutated) break;
 		}
@@ -3651,6 +3699,16 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					NSDictionary *userInfo = @{
+						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																		object:nil
+																	  userInfo:userInfo];
+				}
 			}
 			
 			id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -3690,7 +3748,9 @@
 				}
 			}
 			
-			block(rowid, key, object, metadata, &stop);
+			if (object) {
+				block(rowid, key, object, metadata, &stop);
+			}
 			
 			if (stop || mutation.isMutated) break;
 		}
@@ -3807,6 +3867,16 @@
 						if (object)
 							[connection->objectCache setObject:object forKey:cacheKey];
 					}
+					
+					if (object == nil) {
+						NSDictionary *userInfo = @{
+							YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+							YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+							YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+						[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																			object:nil
+																		  userInfo:userInfo];
+					}
 				}
 				
 				id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -3846,7 +3916,9 @@
 					}
 				}
 				
-				block(rowid, collection, key, object, metadata, &stop);
+				if (object) {
+					block(rowid, collection, key, object, metadata, &stop);
+				}
 				
 				if (stop || mutation.isMutated) break;
 			}
@@ -3965,6 +4037,16 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					NSDictionary *userInfo = @{
+						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
+						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
+						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
+					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
+																		object:nil
+																	  userInfo:userInfo];
+				}
 			}
 			
 			id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -3997,8 +4079,9 @@
 				}
 			}
 			
-			block(rowid, collection, key, object, metadata, &stop);
-			
+			if (object) {
+				block(rowid, collection, key, object, metadata, &stop);
+			}
 			if (stop || mutation.isMutated) break;
 		}
 	}
