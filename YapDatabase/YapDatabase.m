@@ -72,10 +72,10 @@ NSString *const YapDatabaseExtensionsOrderKey        = @"extensionsOrder";
 NSString *const YapDatabaseExtensionDependenciesKey  = @"extensionDependencies";
 NSString *const YapDatabaseNotificationKey           = @"notification";
 
-NSString *const YapDBUnexpectedNilObjectNotification = @"YapDatabaseModifiedExternallyNotification";
-NSString *const YapDBUnexpectedNilObjectUserInfoCollectionKey = @"Collection";
-NSString *const YapDBUnexpectedNilObjectUserInfoKeyKey = @"Key";
-NSString *const YapDBUnexpectedNilObjectUserInfoDataKey = @"Data";
+NSString *const YapDatabaseUnexpectedNilObjectNotification = @"YapDatabaseModifiedExternallyNotification";
+NSString *const YapDatabaseUnexpectedNilObjectUserInfoCollectionKey = @"Collection";
+NSString *const YapDatabaseUnexpectedNilObjectUserInfoKeyKey = @"Key";
+NSString *const YapDatabaseUnexpectedNilObjectUserInfoDataKey = @"Data";
 
 /**
  * ConnectionPool value dictionary keys.

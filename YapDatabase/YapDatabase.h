@@ -112,10 +112,10 @@ extern NSString *const YapDatabaseModifiedExternallyKey;
  * Object: nil
  * UserInfo: "Collection", "Key", "BinaryBlob"
  */
-extern NSString *const YapDBUnexpectedNilObjectNotification;
-extern NSString *const YapDBUnexpectedNilObjectUserInfoCollectionKey;
-extern NSString *const YapDBUnexpectedNilObjectUserInfoKeyKey;
-extern NSString *const YapDBUnexpectedNilObjectUserInfoDataKey;
+extern NSString *const YapDatabaseUnexpectedNilObjectNotification;
+extern NSString *const YapDatabaseUnexpectedNilObjectUserInfoCollectionKey;
+extern NSString *const YapDatabaseUnexpectedNilObjectUserInfoKeyKey;
+extern NSString *const YapDatabaseUnexpectedNilObjectUserInfoDataKey;
 
 /**
  * Welcome to YapDatabase!

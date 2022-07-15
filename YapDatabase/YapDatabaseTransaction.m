@@ -27,6 +27,13 @@
 #pragma unused(ydbLogLevel)
 
 
+@interface YapDatabaseReadTransaction(Private)
+
+- (void)postUnexpectedNilObjectNotificationWithCollection: (NSString *)collection key: (NSString *)key data: (NSData *)data;
+
+@end
+
+
 @implementation YapDatabaseReadTransaction
 
 + (void)load
@@ -2610,13 +2617,9 @@
 					[connection->objectCache setObject:object forKey:cacheKey];
 				
 				if (object == nil) {
-					NSDictionary *userInfo = @{
-						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																		object:nil
-																	  userInfo:userInfo];
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
 				}
 			}
 			
@@ -2975,13 +2978,9 @@
 				}
 				
 				if (object == nil) {
-					NSDictionary *userInfo = @{
-						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																		object:nil
-																	  userInfo:userInfo];
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
 				}
 			}
 			
@@ -3103,13 +3102,9 @@
 					}
 					
 					if (object == nil) {
-						NSDictionary *userInfo = @{
-							YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-							YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-							YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-						[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																			object:nil
-																		  userInfo:userInfo];
+						[self postUnexpectedNilObjectNotificationWithCollection:collection
+																			key:key
+																		   data:oData];
 					}
 				}
 				
@@ -3234,13 +3229,9 @@
 				}
 				
 				if (object == nil) {
-					NSDictionary *userInfo = @{
-						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																		object:nil
-																	  userInfo:userInfo];
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
 				}
 			}
 			
@@ -3701,13 +3692,9 @@
 				}
 				
 				if (object == nil) {
-					NSDictionary *userInfo = @{
-						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																		object:nil
-																	  userInfo:userInfo];
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
 				}
 			}
 			
@@ -3869,13 +3856,9 @@
 					}
 					
 					if (object == nil) {
-						NSDictionary *userInfo = @{
-							YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-							YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-							YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-						[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																			object:nil
-																		  userInfo:userInfo];
+						[self postUnexpectedNilObjectNotificationWithCollection:collection
+																			key:key
+																		   data:oData];
 					}
 				}
 				
@@ -4039,13 +4022,9 @@
 				}
 				
 				if (object == nil) {
-					NSDictionary *userInfo = @{
-						YapDBUnexpectedNilObjectUserInfoCollectionKey: collection,
-						YapDBUnexpectedNilObjectUserInfoKeyKey: key,
-						YapDBUnexpectedNilObjectUserInfoDataKey: oData};
-					[[NSNotificationCenter defaultCenter] postNotificationName:YapDBUnexpectedNilObjectNotification
-																		object:nil
-																	  userInfo:userInfo];
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
 				}
 			}
 			
@@ -6391,6 +6370,16 @@
 	sqlite3_clear_bindings(statement);
 	sqlite3_reset(statement);
 	FreeYapDatabaseString(&_extension);
+}
+
+- (void)postUnexpectedNilObjectNotificationWithCollection: (NSString *)collection key: (NSString *)key data: (NSData *)data {
+	NSDictionary *userInfo = @{
+		YapDatabaseUnexpectedNilObjectUserInfoCollectionKey: collection,
+		YapDatabaseUnexpectedNilObjectUserInfoKeyKey: key,
+		YapDatabaseUnexpectedNilObjectUserInfoDataKey: data};
+	[[NSNotificationCenter defaultCenter] postNotificationName:YapDatabaseUnexpectedNilObjectNotification
+														object:nil
+													  userInfo:userInfo];
 }
 
 @end
