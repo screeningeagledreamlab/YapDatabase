@@ -6377,9 +6377,11 @@
 		YapDatabaseUnexpectedNilObjectUserInfoCollectionKey: collection,
 		YapDatabaseUnexpectedNilObjectUserInfoKeyKey: key,
 		YapDatabaseUnexpectedNilObjectUserInfoDataKey: data};
-	[[NSNotificationCenter defaultCenter] postNotificationName:YapDatabaseUnexpectedNilObjectNotification
-														object:nil
-													  userInfo:userInfo];
+	dispatch_async(dispatch_get_main_queue(),^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:YapDatabaseUnexpectedNilObjectNotification
+															object:nil
+														  userInfo:userInfo];
+	}
 }
 
 @end

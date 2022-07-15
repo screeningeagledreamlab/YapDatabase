@@ -612,7 +612,7 @@
 									  collectionKey.collection, collectionKey.key,        object,
 											another.collection,       another.key, anotherObject);
 			} else {
-				return NSOrderedAscending;
+				return NSOrderedSame;
 			}
 		}
 		else if (sorting->blockType == YapDatabaseBlockTypeWithMetadata)
@@ -647,7 +647,7 @@
 									collectionKey.collection, collectionKey.key,        object,        metadata,
 									another.collection,       another.key, anotherObject, anotherMetadata);
 			} else {
-				return NSOrderedAscending;
+				return NSOrderedSame;
 			}
 		}
 		
