@@ -6381,7 +6381,7 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:YapDatabaseUnexpectedNilObjectNotification
 															object:nil
 														  userInfo:userInfo];
-	}
+	});
 }
 
 @end
