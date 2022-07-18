@@ -1304,6 +1304,8 @@
 		NSString *pageKey = pageMetadata->pageKey;
 		YapDatabaseViewPage *page = [self pageForPageKey:pageKey];
 		
+		NSAssert(page != nil, @"Missing page in group(%@)", group);
+		
 		YDBLogVerbose(@"Inserting key(%@) collection(%@) in group(%@) at index(%lu) with page(%@) pageOffset(%lu)",
 		              collectionKey.key, collectionKey.collection, group,
 		              (unsigned long)index, pageKey, (unsigned long)(index - pageOffset));

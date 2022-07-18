@@ -607,10 +607,13 @@
 			[databaseTransaction getCollectionKey:&another
 			                               object:&anotherObject
 			                             forRowid:anotherRowid];
-			
-			return sortingBlock(databaseTransaction, group,
-			                      collectionKey.collection, collectionKey.key,        object,
-			                            another.collection,       another.key, anotherObject);
+			if (object && anotherObject) {
+				return sortingBlock(databaseTransaction, group,
+									  collectionKey.collection, collectionKey.key,        object,
+											another.collection,       another.key, anotherObject);
+			} else {
+				return NSOrderedSame;
+			}
 		}
 		else if (sorting->blockType == YapDatabaseBlockTypeWithMetadata)
 		{
@@ -639,10 +642,13 @@
 			                               object:&anotherObject
 			                             metadata:&anotherMetadata
 			                             forRowid:anotherRowid];
-			
-			return sortingBlock(databaseTransaction, group,
-			                      collectionKey.collection, collectionKey.key,        object,        metadata,
-			                            another.collection,       another.key, anotherObject, anotherMetadata);
+			if (object && anotherObject) {
+				return sortingBlock(databaseTransaction, group,
+									collectionKey.collection, collectionKey.key,        object,        metadata,
+									another.collection,       another.key, anotherObject, anotherMetadata);
+			} else {
+				return NSOrderedSame;
+			}
 		}
 		
 	#pragma clang diagnostic pop

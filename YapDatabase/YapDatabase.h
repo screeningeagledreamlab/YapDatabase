@@ -104,6 +104,20 @@ extern NSString *const YapDatabaseAllKeysRemovedKey;
 extern NSString *const YapDatabaseModifiedExternallyKey;
 
 /**
+ * Occasionally when the data model and serialized binary blobs don't match
+ * YapDatabase Deserializer may fail to read the object from DB
+ * In this case, this Notification is posted, so that analytics can catch the error.
+ *
+ * Content of the notification:
+ * Object: nil
+ * UserInfo: "Collection", "Key", "BinaryBlob"
+ */
+extern NSString *const YapDatabaseUnexpectedNilObjectNotification;
+extern NSString *const YapDatabaseUnexpectedNilObjectUserInfoCollectionKey;
+extern NSString *const YapDatabaseUnexpectedNilObjectUserInfoKeyKey;
+extern NSString *const YapDatabaseUnexpectedNilObjectUserInfoDataKey;
+
+/**
  * Welcome to YapDatabase!
  *
  * The project page has a wealth of documentation if you have any questions.
