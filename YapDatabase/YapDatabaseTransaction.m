@@ -27,6 +27,13 @@
 #pragma unused(ydbLogLevel)
 
 
+@interface YapDatabaseReadTransaction(Private)
+
+- (void)postUnexpectedNilObjectNotificationWithCollection: (NSString *)collection key: (NSString *)key data: (NSData *)data;
+
+@end
+
+
 @implementation YapDatabaseReadTransaction
 
 + (void)load
@@ -2608,6 +2615,12 @@
 				
 				if (object)
 					[connection->objectCache setObject:object forKey:cacheKey];
+				
+				if (object == nil) {
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
+				}
 			}
 			
 			id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -2633,7 +2646,9 @@
 					[connection->metadataCache setObject:[YapNull null] forKey:cacheKey];
 			}
 			
-			block(keyIndex, object, metadata, &stop);
+			if (object) {
+				block(keyIndex, object, metadata, &stop);
+			}
 			
 			[keyIndexDict removeObjectForKey:key];
 			
@@ -2961,9 +2976,17 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
+				}
 			}
 			
-			block(rowid, key, object, &stop);
+			if (object) {
+				block(rowid, key, object, &stop);
+			}
 			
 			if (stop || mutation.isMutated) break;
 		}
@@ -3077,9 +3100,17 @@
 						if (object)
 							[connection->objectCache setObject:object forKey:cacheKey];
 					}
+					
+					if (object == nil) {
+						[self postUnexpectedNilObjectNotificationWithCollection:collection
+																			key:key
+																		   data:oData];
+					}
 				}
 				
-				block(rowid, collection, key, object, &stop);
+				if (object) {
+					block(rowid, collection, key, object, &stop);
+				}
 				
 				if (stop || mutation.isMutated) break;
 			}
@@ -3196,9 +3227,17 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
+				}
 			}
 			
-			block(rowid, collection, key, object, &stop);
+			if (object) {
+				block(rowid, collection, key, object, &stop);
+			}
 			
 			if (stop || mutation.isMutated) break;
 		}
@@ -3651,6 +3690,12 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
+				}
 			}
 			
 			id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -3690,7 +3735,9 @@
 				}
 			}
 			
-			block(rowid, key, object, metadata, &stop);
+			if (object) {
+				block(rowid, key, object, metadata, &stop);
+			}
 			
 			if (stop || mutation.isMutated) break;
 		}
@@ -3807,6 +3854,12 @@
 						if (object)
 							[connection->objectCache setObject:object forKey:cacheKey];
 					}
+					
+					if (object == nil) {
+						[self postUnexpectedNilObjectNotificationWithCollection:collection
+																			key:key
+																		   data:oData];
+					}
 				}
 				
 				id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -3846,7 +3899,9 @@
 					}
 				}
 				
-				block(rowid, collection, key, object, metadata, &stop);
+				if (object) {
+					block(rowid, collection, key, object, metadata, &stop);
+				}
 				
 				if (stop || mutation.isMutated) break;
 			}
@@ -3965,6 +4020,12 @@
 					if (object)
 						[connection->objectCache setObject:object forKey:cacheKey];
 				}
+				
+				if (object == nil) {
+					[self postUnexpectedNilObjectNotificationWithCollection:collection
+																		key:key
+																	   data:oData];
+				}
 			}
 			
 			id metadata = [connection->metadataCache objectForKey:cacheKey];
@@ -3997,8 +4058,9 @@
 				}
 			}
 			
-			block(rowid, collection, key, object, metadata, &stop);
-			
+			if (object) {
+				block(rowid, collection, key, object, metadata, &stop);
+			}
 			if (stop || mutation.isMutated) break;
 		}
 	}
@@ -6308,6 +6370,18 @@
 	sqlite3_clear_bindings(statement);
 	sqlite3_reset(statement);
 	FreeYapDatabaseString(&_extension);
+}
+
+- (void)postUnexpectedNilObjectNotificationWithCollection: (NSString *)collection key: (NSString *)key data: (NSData *)data {
+	NSDictionary *userInfo = @{
+		YapDatabaseUnexpectedNilObjectUserInfoCollectionKey: collection,
+		YapDatabaseUnexpectedNilObjectUserInfoKeyKey: key,
+		YapDatabaseUnexpectedNilObjectUserInfoDataKey: data};
+	dispatch_async(dispatch_get_main_queue(),^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:YapDatabaseUnexpectedNilObjectNotification
+															object:nil
+														  userInfo:userInfo];
+	});
 }
 
 @end

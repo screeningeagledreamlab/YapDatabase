@@ -72,6 +72,11 @@ NSString *const YapDatabaseExtensionsOrderKey        = @"extensionsOrder";
 NSString *const YapDatabaseExtensionDependenciesKey  = @"extensionDependencies";
 NSString *const YapDatabaseNotificationKey           = @"notification";
 
+NSString *const YapDatabaseUnexpectedNilObjectNotification = @"YapDatabaseUnexpectedNilObjectNotification";
+NSString *const YapDatabaseUnexpectedNilObjectUserInfoCollectionKey = @"collection";
+NSString *const YapDatabaseUnexpectedNilObjectUserInfoKeyKey = @"key";
+NSString *const YapDatabaseUnexpectedNilObjectUserInfoDataKey = @"data";
+
 /**
  * ConnectionPool value dictionary keys.
 **/
