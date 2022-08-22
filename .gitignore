@@ -25,6 +25,9 @@ xcuserdata
 Carthage/Checkouts
 Carthage/Build
 
+## Fastlane
+fastlane/report.xml
+
 ## Custom
 Docs
 LumberjackUser.h

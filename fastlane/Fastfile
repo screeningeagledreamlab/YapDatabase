@@ -1,0 +1,44 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Creates a zip archive containing a compiled YapDatabase XCFramework with iOS, iOS Simulator, and Mac Catalyst slices."
+  lane :build_xcframework do
+    build_destinations = {
+      "iOS": "generic/platform=iOS",
+      "iOS Simulator": "generic/platform=iOS Simulator",
+      "Mac Catalyst": "generic/platform=macOS,variant=Mac Catalyst,name=Any Mac",
+    }
+
+    build_destinations.each do |platform, destination|
+      archive_for_xcframework(
+        destination: destination,
+        archive_path: "./build/YapDatabase-#{platform}.xcarchive",
+      )  
+    end
+
+    create_xcframework(
+      frameworks: build_destinations.keys.map { |platform|
+        "./build/YapDatabase-#{platform}.xcarchive/Products/Library/Frameworks/YapDatabase.framework"
+      },
+      output: './build/YapDatabase.xcframework'
+    )
+
+    zip(
+      path: "./build/YapDatabase.xcframework",
+      output_path: "./build/YapDatabase.xcframework.zip"
+    )
+  end
+
+  desc "Helper lane for creating an XCArchive for the specified destination."
+  private_lane :archive_for_xcframework do |options|
+    xcodebuild(
+      archive: true,
+      project: "YapDatabase.xcodeproj",
+      scheme: "YapDatabase-iOS",
+      configuration: "Release",
+      destination: options[:destination],
+      archive_path: options[:archive_path],
+      xcargs: "VALIDATE_WORKSPACE=NO SKIP_INSTALL=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=NO CLANG_ENABLE_CODE_COVERAGE=NO STRIP_INSTALLED_PRODUCT=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES"
+    )
+  end
+end
