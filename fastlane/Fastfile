@@ -3,6 +3,9 @@ default_platform(:ios)
 platform :ios do
   desc "Creates a zip archive containing a compiled YapDatabase XCFramework with iOS, iOS Simulator, and Mac Catalyst slices."
   lane :build_xcframework do
+    BUILD_DIR = "./build"
+    MODULE_NAME = "YapDatabase"
+
     build_destinations = {
       "iOS": "generic/platform=iOS",
       "iOS Simulator": "generic/platform=iOS Simulator",
@@ -12,20 +15,34 @@ platform :ios do
     build_destinations.each do |platform, destination|
       archive_for_xcframework(
         destination: destination,
-        archive_path: "./build/YapDatabase-#{platform}.xcarchive",
+        archive_path: "#{BUILD_DIR}/#{MODULE_NAME}-#{platform}.xcarchive",
       )  
     end
 
+    # This is necessary due to a Swift compiler bug that emits an invalid interface when the module name shares a name
+    # with a public type. See https://github.com/apple/swift/issues/56573
+    shell_command =
+      # List paths of all .swiftinterface files containing <MODULE_NAME>.* prefix.
+      "grep -rli \"#{MODULE_NAME}.*\" ../#{BUILD_DIR}/#{MODULE_NAME}-*.xcarchive/Products/Library/Frameworks/#{MODULE_NAME}.framework/Modules/#{MODULE_NAME}.swiftmodule/*.swiftinterface" +
+      # Replace grep output newlines with NULL bytes
+      " | tr \\\\n \\\\0" +
+      # Remove <MODULE_NAME>. prefix from all identifiers. (using NULL byte as delimiter, for `xargs` to properly to handle paths with spaces).
+      " | xargs -0 sed -E -i '' \"s/#{MODULE_NAME}\\.([^ ]*)/\\1/g\""
+
+    # Note: `sh` function's working directory is [root]/fastlane.
+    # See https://docs.fastlane.tools/advanced/fastlane/#directory-behavior
+    sh(shell_command)
+
     create_xcframework(
       frameworks: build_destinations.keys.map { |platform|
-        "./build/YapDatabase-#{platform}.xcarchive/Products/Library/Frameworks/YapDatabase.framework"
+        "#{BUILD_DIR}/#{MODULE_NAME}-#{platform}.xcarchive/Products/Library/Frameworks/#{MODULE_NAME}.framework"
       },
-      output: './build/YapDatabase.xcframework'
+      output: "#{BUILD_DIR}/#{MODULE_NAME}.xcframework"
     )
 
     zip(
-      path: "./build/YapDatabase.xcframework",
-      output_path: "./build/YapDatabase.xcframework.zip"
+      path: "#{BUILD_DIR}/#{MODULE_NAME}.xcframework",
+      output_path: "#{BUILD_DIR}/#{MODULE_NAME}.xcframework.zip"
     )
   end
 
